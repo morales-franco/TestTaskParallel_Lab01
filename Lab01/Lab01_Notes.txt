@@ -1,0 +1,6 @@
+#Notas
+
+1. De forma predeterminada trabajamos en el hilo principal de la Interface de Usuario.
+2. Tenemos que evitar ejecutar operaciones largar en este thread porque se podria bloquear la UI.
+3. Si realizamos todas las operaciones en 1 unico Thread solo utilizaremos 1 solo nucleo del procesador --> Por más que tenga varios core's.
+4. TASK.PARALLEL LIBRARY --> Clases que facilitan la ejecución de nuestro código en diferentes hilos.
