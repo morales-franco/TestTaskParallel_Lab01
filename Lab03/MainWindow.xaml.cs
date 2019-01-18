@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -56,7 +58,7 @@ namespace Lab03
             * BeginInvoke coloca la logica que queremos ejecutar en la cola del hilo que administra al label lblResult_Dispatcher en este caso.
             */
 
-            Task.Run(() => 
+            Task.Run(() =>
             {
                 string result = "Resultado obtenido - Dispatcher [Action]";
                 lblResult_Dispatcher.Dispatcher.BeginInvoke(new Action(() => ShowMessage(result)));
@@ -80,5 +82,69 @@ namespace Lab03
         }
 
         #endregion
+
+        #region Utilizando async / await
+
+        /*
+         * Con async / await podemos realizar operaciones Asincronicas
+         */
+
+
+        //METODO SYNC
+        private void btnGetResult_async_await_SYN_Click(object sender, RoutedEventArgs e)
+        {
+            lblResult_async_await.Content = "Calculando número aleatorio...";
+
+            /*
+                * lblResult_async_await.Content += $" Número obtenido: { t.Result}";
+                * t.Result bloquea el hilo principal hasta que t termine de ejecutar y tenga el resultado.
+                * Al bloquear el main thread (hilo UI) se bloquea toda la interface
+            */
+            Task<int> t = Task.Run<int>(() =>
+            {
+                Thread.Sleep(10000);
+                return new Random().Next(50000);
+            });
+
+            lblResult_async_await.Content += $" Número obtenido: { t.Result}";
+        }
+
+
+        /*
+         * Llevamos el metodo btnGetResult_async_await_SYN_Click para transformalo en asincronico
+         * y de esta forma NO bloquear el main thread.
+         * 
+         *  async : Indicamos que el metodo puede ejecutarse en forn asincronica.
+         *  un metodo async es SINCRONICO hasta que se encuentra con el el primer AWAIT en este punto el metodo se SUSPENDE
+         *  y regresa el control al código que lo invoco hasta que la tarea sea completada.
+         */
+
+        private async void btnGetResult_async_await_Click(object sender, RoutedEventArgs e)
+        {
+            lblResult_async_await.Content = "Calculando número aleatorio...";
+
+            Debug.WriteLine($"Hilo que LANZA la Task de Calculo de Numero: { Thread.CurrentThread.ManagedThreadId }");
+
+            Task<int> t = Task.Run<int>(() =>
+            {
+                Debug.WriteLine($"Hilo que EJECUTA la Task de Calculo de Numero: { Thread.CurrentThread.ManagedThreadId }");
+                Thread.Sleep(10000);
+                return new Random().Next(50000);
+            });
+
+            /*
+             * Suspendemos el metodo mientras se ejecuta una tarea de larga duración, de esta forma devolvemos el control al hilo que invoco el metodo
+             * hasta que finalice de calcular el numero aleatorio
+             */
+
+            Debug.WriteLine($"Hilo ANTES DEL AWAIT: { Thread.CurrentThread.ManagedThreadId }");
+            lblResult_async_await.Content += $" Número obtenido: { await t}";
+
+            Debug.WriteLine($"Hilo DESPUES DEL AWAIT: { Thread.CurrentThread.ManagedThreadId }");
+        }
+
+
+        #endregion
+
     }
 }

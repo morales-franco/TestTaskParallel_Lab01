@@ -10,5 +10,9 @@
         <Label x:Name="lblResult_Dispatcher"/>
    
         <Button x:Name="btnGetResult_Dispatcher" Click="btnGetResult_Dispatcher_Click" Content="Obtener Resultado - Dispatcher"/>
+
+        <Label x:Name="lblResult_async_await" Background="Yellow"/>
+
+        <Button x:Name="btnGetResult_async_await" Click="btnGetResult_async_await_Click" Content="Obtener Resultado - async_await" Background="Yellow"/>
     </StackPanel>
 </Window>
