@@ -14,5 +14,10 @@
         <Label x:Name="lblResult_async_await" Background="Yellow"/>
 
         <Button x:Name="btnGetResult_async_await" Click="btnGetResult_async_await_Click" Content="Obtener Resultado - async_await" Background="Yellow"/>
+
+        <Label x:Name="lblResult_awaitable_methods" Background="Azure"/>
+
+        <Button x:Name="btnGetResult_awaitable_methods" Click="btnGetResult_awaitable_methods_Click" Content="Obtener Resultado - awaitable_methods" Background="Azure"/>
+
     </StackPanel>
 </Window>

@@ -146,5 +146,41 @@ namespace Lab03
 
         #endregion
 
+        #region Awaitable Methods
+
+        private async void btnGetResult_awaitable_methods_Click(object sender, RoutedEventArgs e)
+        {
+            lblResult_awaitable_methods.Content = "Obtener el nombre del producto";
+            var productName = await GetProductName(1);
+            lblResult_awaitable_methods.Content += Environment.NewLine + productName;
+            await ShowNameAsync(1);
+        }
+
+        private async Task<string> GetProductName(int productId)
+        {
+            //Simulamos un proceso de larga duración
+            string result = await Task.Run<string>(() => 
+            {
+                Thread.Sleep(8000);
+                return "Laptop Pro - 2019";
+            });
+
+            return result;
+        }
+
+        private async Task ShowNameAsync(int productId)
+        {
+            string productName = await Task.Run<string>(() =>
+            {
+                Thread.Sleep(2000);
+                return "Laptop No Pro - 2";
+            });
+
+            lblResult_awaitable_methods.Content += Environment.NewLine + productName;
+
+        }
+
+        #endregion
+
     }
 }
