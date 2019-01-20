@@ -19,5 +19,9 @@
 
         <Button x:Name="btnGetResult_awaitable_methods" Click="btnGetResult_awaitable_methods_Click" Content="Obtener Resultado - awaitable_methods" Background="Azure"/>
 
+        <Button x:Name="btnGetProducts_callback" Click="btnGetProducts_callback_Click" Content="Búscar productos" Background="Coral"/>
+
+        <ListBox x:Name="Products" Width="100" Background="Coral" />
+
     </StackPanel>
 </Window>

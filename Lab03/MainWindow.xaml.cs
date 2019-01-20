@@ -182,5 +182,37 @@ namespace Lab03
 
         #endregion
 
+        #region Callback Methods
+        private async void btnGetProducts_callback_Click(object sender, RoutedEventArgs e)
+        {
+            await GetAllProducts(RemoveDuplicates);
+        }
+            
+        private async Task GetAllProducts(Action<List<string>> callback)
+        {
+            var products = await Task.Run(() =>
+            {
+                Thread.Sleep(6000);
+                return new List<string>
+                {
+                    "Azucar","Cafe", "Leche","Queso", "Azucar","Galletitas", "Cafe", "Leche"
+                };
+            });
+
+            await Task.Run(() => callback(products));
+        }
+
+        private void RemoveDuplicates(List<string> products)
+        {
+            var uniqueProducts = products.Distinct();
+
+            Products.Dispatcher.Invoke(() =>
+            {
+                Products.ItemsSource = uniqueProducts;
+            });
+        }
+
+
+        #endregion
     }
 }
