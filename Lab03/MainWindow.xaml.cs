@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -214,5 +215,51 @@ namespace Lab03
 
 
         #endregion
+
+        #region APM Operations (Asynchronus Progamming Model)
+
+        private async void btnValidateURL_apm_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URLToValidate_apm.Text);
+
+                //IAsyncResult result = request.BeginGetResponse(GetResponse, request);
+
+                HttpWebResponse response =
+                    await Task<WebResponse>.Factory.FromAsync(
+                        request.BeginGetResponse,
+                        request.EndGetResponse,
+                        request) as HttpWebResponse;
+
+                result_apm.Content = $"Status devuelto: {response.StatusCode}";
+
+            }
+            catch (Exception ex)
+            {
+
+                result_apm.Content = ex.Message;
+            }
+        }
+
+        private void GetResponse(IAsyncResult result)
+        {
+            //Recuperamos el objeto Request que le pasamos como parametro
+            //al metodo request.BeginGetResponse
+            var request = (HttpWebRequest)result.AsyncState;
+
+            //Con el objeto request podemos obtener el resultado de la petición
+            var response = (HttpWebResponse)request.EndGetResponse(result);
+
+            result_apm.Dispatcher.Invoke(() =>
+            {
+                result_apm.Content = $"Status devuelto: {response.StatusCode}";
+            });
+
+        }
+
+
+        #endregion
+
     }
 }

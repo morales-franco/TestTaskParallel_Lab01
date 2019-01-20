@@ -23,5 +23,9 @@
 
         <ListBox x:Name="Products" Width="100" Background="Coral" />
 
+        <TextBox x:Name="URLToValidate_apm" Height="38" Background="LightGreen"/>
+        <Button x:Name="btnValidateURL_apm" Click="btnValidateURL_apm_Click" Content="Validar URL" Background="LightGreen" Height="100"/>
+        <Label x:Name="result_apm" Height="38"/>
+
     </StackPanel>
 </Window>
