@@ -1,0 +1,58 @@
+﻿@model AppTest.Models.DashboardVM
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Dashboard - Asynchronous - A</h2>
+
+<p>
+    Tiempo para obtener datos: @ViewBag.Time ms
+</p>
+<table class="table">
+    <tr>
+        <th>Tags</th>
+    </tr>
+
+    @foreach (var tag in Model.Tags)
+    {
+        <tr>
+            <td>
+                @tag
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+<table class="table">
+    <tr>
+        <th>Category</th>
+    </tr>
+
+    @foreach (var category in Model.Categories)
+    {
+        <tr>
+            <td>
+                @category
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+<table class="table">
+    <tr>
+        <th>Category</th>
+    </tr>
+
+    @foreach (var post in Model.Posts)
+    {
+        <tr>
+            <td>
+                @post
+            </td>
+        </tr>
+    }
+
+</table>
